@@ -1,0 +1,17 @@
+<launch>
+  <!-- Simulacion IK (Pieper) + LSPB en RViz. NO usa joint_state_publisher_gui: el nodo publica /joint_states.
+       NO envia nada al robot real. -->
+  <arg name="amax" default="2.0"/>   <!-- rad/s^2, valor DEMO: reemplazar por el del datasheet -->
+
+  <param name="robot_description"
+         command="$(find xacro)/xacro '$(find irb120_description)/urdf/irb120.urdf.xacro'" />
+
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+  <node name="ik_lspb_node" pkg="irb120_description" type="ik_lspb_node.py" output="screen">
+    <param name="amax" value="$(arg amax)"/>
+  </node>
+
+  <node name="rviz" pkg="rviz" type="rviz"
+        args="-d $(find irb120_description)/launch/robot.rviz" required="false" />
+</launch>
