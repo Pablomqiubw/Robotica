@@ -1,0 +1,17 @@
+<launch>
+  <!-- Recibe datos del ABB IRB 120 en vivo y habilita el nodo /rws_mover_node para enviar objetivos en grados. -->
+  <arg name="robot_ip" default="192.168.125.1" />
+  <arg name="rate" default="15.0" />
+  <arg name="use_rviz" default="true" />
+
+  <include file="$(find irb120_description)/launch/receive_real.launch">
+    <arg name="mode" value="rws" />
+    <arg name="robot_ip" value="$(arg robot_ip)" />
+    <arg name="rate" value="$(arg rate)" />
+    <arg name="use_rviz" value="$(arg use_rviz)" />
+  </include>
+
+  <node name="rws_mover_node" pkg="irb120_description" type="rws_mover.py" output="screen">
+    <param name="robot_ip" value="$(arg robot_ip)" />
+  </node>
+</launch>

@@ -1,0 +1,69 @@
+Panels:
+  - Class: rviz/Displays
+    Name: Displays
+  - Class: rviz/Views
+    Name: Views
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Alpha: 0.5
+      Cell Size: 0.25
+      Class: rviz/Grid
+      Color: 160; 160; 164
+      Enabled: true
+      Name: Grid
+      Plane: XY
+      Plane Cell Count: 12
+      Reference Frame: <Fixed Frame>
+      Value: true
+    - Alpha: 1
+      Class: rviz/RobotModel
+      Enabled: true
+      Name: Robot Real
+      Robot Description: robot_description
+      TF Prefix: ""
+      Value: true
+    - Alpha: 0.4
+      Class: rviz/RobotModel
+      Enabled: true
+      Name: Objetivo (Fantasma)
+      Robot Description: preview/robot_description
+      TF Prefix: preview
+      Value: true
+    - Class: rviz/InteractiveMarkers
+      Enabled: true
+      Name: Marcador Objetivo 3D
+      Show Axes: true
+      Show Descriptions: true
+      Update Topic: /abb_rviz_marker/update
+      Value: true
+  Enabled: true
+  Global Options:
+    Background Color: 48; 48; 48
+    Fixed Frame: base_link
+  Name: root
+  Tools:
+    - Class: rviz/Interact
+      Hide Inactive Objects: false
+    - Class: rviz/MoveCamera
+    - Class: rviz/Select
+    - Class: rviz/Measure
+  Value: true
+  Views:
+    Current:
+      Class: rviz/Orbit
+      Distance: 1.6
+      Focal Point:
+        X: 0.15
+        Y: 0.0
+        Z: 0.35
+      Name: Current View
+      Pitch: 0.35
+      Target Frame: <Fixed Frame>
+      Value: Orbit (rviz)
+      Yaw: 0.78
+Window Geometry:
+  Height: 860
+  Width: 1010
+  X: 10
+  Y: 25

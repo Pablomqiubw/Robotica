@@ -1,0 +1,38 @@
+<launch>
+  <!-- Control visual completo en RViz + Sliders + Marcador 3D para mover el ABB IRB 120 real via TCP 5005 -->
+  <arg name="robot_ip" default="192.168.125.1" />
+  <arg name="tcp_port" default="5005" />
+  <arg name="rate" default="15.0" />
+  <arg name="use_rviz" default="true" />
+  <arg name="use_gui" default="true" />
+
+  <include file="$(find abb_irb120_support)/launch/load_irb120_3_58.launch" />
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+  <group ns="preview">
+    <include file="$(find abb_irb120_support)/launch/load_irb120_3_58.launch" />
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
+      <param name="tf_prefix" value="preview" />
+    </node>
+  </group>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="preview_base_tf"
+        args="0 0 0 0 0 0 base_link preview/base_link" />
+
+  <node name="abb_receive_node" pkg="irb120_description" type="abb_receive_node.py" output="screen">
+    <param name="mode" value="rws" />
+    <param name="robot_ip" value="$(arg robot_ip)" />
+    <param name="rate" value="$(arg rate)" />
+  </node>
+
+  <node name="tcp_mover_node" pkg="irb120_description" type="tcp_mover.py" output="screen">
+    <param name="robot_ip" value="$(arg robot_ip)" />
+    <param name="tcp_port" value="$(arg tcp_port)" />
+  </node>
+
+  <node name="rviz_teleop" pkg="irb120_description" type="rviz_teleop.py" output="screen">
+    <param name="use_gui" value="$(arg use_gui)" />
+  </node>
+
+  <node if="$(arg use_rviz)" name="rviz" pkg="rviz" type="rviz"
+        args="-d $(find irb120_description)/launch/rviz_control.rviz" required="false" />
+</launch>
